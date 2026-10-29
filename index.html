@@ -179,6 +179,41 @@ dialog::backdrop{background:rgba(3,5,9,.75);backdrop-filter:blur(4px)}
 .lab-list div::before{content:"›";position:absolute;left:0;color:var(--cyan);font-family:var(--mono)}
 .lab-list b{color:var(--text);font-weight:600}
 
+/* bug bounty */
+.bb-sum{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+.bb-sum div{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:16px 18px}
+.bb-sum b{font-family:var(--mono);font-size:26px;display:block;line-height:1.1}
+.bb-sum span{font-size:13px;color:var(--muted)}
+.bb-types{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.bb-list{border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;background:var(--panel)}
+.bb-row{display:grid;grid-template-columns:96px 120px 1fr 150px;gap:16px;align-items:center;padding:14px 20px;border-top:1px solid var(--line);font-size:14.5px}
+.bb-row:first-child{border-top:0}
+.bb-row.head{background:var(--bg2);font-family:var(--mono);font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;padding:11px 20px}
+.bb-row .dt{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.bb-row .ty{font-family:var(--mono);font-size:12px;color:var(--cyan)}
+.bb-row .ti{color:#c5d1e1}
+.bb-row.hide{display:none}
+.st{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:99px;border:1px solid;justify-self:start;white-space:nowrap}
+.st.dup{color:var(--green);border-color:rgba(0,229,160,.35);background:rgba(0,229,160,.06)}
+.st.inf{color:var(--muted);border-color:var(--line2);background:var(--bg2)}
+.st.na{color:var(--red);border-color:rgba(255,95,109,.35);background:rgba(255,95,109,.06)}
+.st.new{color:var(--violet);border-color:rgba(155,123,255,.35);background:rgba(155,123,255,.06)}
+.bb-learn{margin-top:22px;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel);padding:22px 24px}
+.bb-learn h3{font-size:13.5px;color:var(--green);font-weight:500;margin-bottom:12px}
+.bb-learn ol{padding-left:20px;display:grid;gap:9px}
+.bb-learn li{color:#bfcbdc;font-size:15px}
+.bb-learn li::marker{color:var(--green);font-family:var(--mono)}
+.bb-learn b{color:var(--text)}
+.bb-note{margin-top:16px;font-size:13.5px;color:var(--dim);display:grid;gap:4px}
+.bb-note b{font-family:var(--mono);font-weight:500}
+@media (max-width:760px){
+  .bb-sum{grid-template-columns:repeat(2,1fr)}
+  .bb-row{grid-template-columns:1fr auto;gap:6px 12px;padding:14px 16px}
+  .bb-row.head{display:none}
+  .bb-row .dt{grid-column:1}.bb-row .st{grid-column:2;grid-row:1;justify-self:end}
+  .bb-row .ty{grid-column:1/-1}.bb-row .ti{grid-column:1/-1}
+}
+
 /* timeline */
 .tl-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
 .tl-grid h3.col{font-family:var(--mono);font-size:14px;color:var(--muted);margin-bottom:20px;font-weight:500}
@@ -219,6 +254,7 @@ a.citem:hover{border-color:var(--green);transform:translateX(4px)}
 footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
+@media (max-width:1200px) and (min-width:961px){.links{gap:0}.links a{padding:8px 9px;font-size:12.5px}.links a span{display:none}}
 @media (max-width:960px){
   .hero-grid,.about-grid,.tl-grid,.contact{grid-template-columns:1fr}
   .hero-grid .avatar{order:-1;width:min(280px,70vw)}
@@ -257,8 +293,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <a href="#habilidades"><span>02.</span> habilidades</a>
       <a href="#proyectos"><span>03.</span> proyectos</a>
       <a href="#laboratorios"><span>04.</span> labs</a>
-      <a href="#trayectoria"><span>05.</span> trayectoria</a>
-      <a href="#contacto"><span>06.</span> contacto</a>
+      <a href="#bug-bounty"><span>05.</span> bug_bounty</a>
+      <a href="#trayectoria"><span>06.</span> trayectoria</a>
+      <a href="#contacto"><span>07.</span> contacto</a>
     </div>
     <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
   </nav>
@@ -305,7 +342,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="stat"><b data-count="60">0</b><span>prácticas técnicas documentadas</span></div>
       <div class="stat"><b data-count="8">0</b><span>módulos ASIX cursados</span></div>
       <div class="stat"><b data-count="5">0</b><span>proyectos de infraestructura en equipo</span></div>
-      <div class="stat"><b data-count="3">0</b><span>reportes de bug bounty (HackerOne)</span></div>
+      <div class="stat"><b data-count="21">0</b><span>reportes de bug bounty enviados</span></div>
     </div>
   </div>
 </section>
@@ -377,10 +414,46 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </div>
 </section>
 
+<!-- BUG BOUNTY -->
+<section id="bug-bounty">
+  <div class="wrap">
+    <div class="sec-head reveal"><div class="idx">// 05 — bug_bounty</div><h2>Reportes en HackerOne</h2><p>Investigación de seguridad en programas públicos de bug bounty. Por política de divulgación responsable no muestro empresas, dominios, endpoints ni detalles técnicos explotables.</p></div>
+    <div class="bb-sum reveal">
+      <div><b>21</b><span>reportes enviados</span></div>
+      <div><b class="g">10</b><span>cerrados como duplicados</span></div>
+      <div><b>3</b><span>programas (fintech y banca)</span></div>
+      <div><b>abr–ago</b><span>2026</span></div>
+    </div>
+    <div class="bb-types reveal"><span class="chip">Control de acceso en APIs (BOLA/IDOR)</span><span class="chip">XSS almacenado / CSRF</span><span class="chip">Exposición de datos y secretos</span><span class="chip">JWT</span><span class="chip">Subdomain takeover</span><span class="chip">Abuso de JSON-RPC batching</span><span class="chip">Lógica de negocio</span></div>
+    <div class="filters reveal" id="bb-filters">
+      <button class="on" data-f="all">todos</button>
+      <button data-f="dup">duplicados</button>
+      <button data-f="inf">informativos</button>
+      <button data-f="open">en revisión / n/a</button>
+    </div>
+    <div class="bb-list reveal" id="bb-list"></div>
+    <div class="bb-learn reveal">
+      <h3 class="mono">$ cat lecciones_aprendidas.md</h3>
+      <ol>
+        <li><b>Probar el impacto, no solo el indicio.</b> Un comportamiento extraño no es una vulnerabilidad hasta que se demuestra qué puede hacer un atacante con él.</li>
+        <li><b>En control de acceso, demostrar el cruce entre dos cuentas distintas.</b> Que un identificador cercano responda no prueba un fallo de aislamiento.</li>
+        <li><b>En XSS, demostrar la ejecución en una interfaz de la empresa,</b> no solo que el dato se guarda sin sanear.</li>
+        <li><b>Leer la política y el alcance del programa antes de empezar.</b> Muchos programas excluyen expresamente la denegación de servicio y el rate-limiting.</li>
+        <li><b>La rapidez cuenta.</b> En hallazgos evidentes varios investigadores llegan a la vez y solo cuenta el primero.</li>
+      </ol>
+    </div>
+    <div class="bb-note reveal">
+      <div><b class="g">Duplicado</b> — el mismo hallazgo ya lo había reportado antes otro investigador.</div>
+      <div><b>Informativo</b> — el programa no lo considera un fallo a corregir (riesgo aceptado o impacto insuficiente).</div>
+      <div><b class="v">En revisión</b> — pendiente de evaluación por el programa.</div>
+    </div>
+  </div>
+</section>
+
 <!-- TIMELINE -->
 <section id="trayectoria">
   <div class="wrap">
-    <div class="sec-head reveal"><div class="idx">// 05 — trayectoria</div><h2>Formación y experiencia</h2></div>
+    <div class="sec-head reveal"><div class="idx">// 06 — trayectoria</div><h2>Formación y experiencia</h2></div>
     <div class="tl-grid">
       <div class="reveal">
         <h3 class="col">$ cat formacion.log</h3>
@@ -423,7 +496,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <!-- CONTACT -->
 <section id="contacto">
   <div class="wrap">
-    <div class="sec-head reveal"><div class="idx">// 06 — contacto</div><h2>Hablemos</h2></div>
+    <div class="sec-head reveal"><div class="idx">// 07 — contacto</div><h2>Hablemos</h2></div>
     <div class="contact">
       <div class="contact-card reveal">
         <h3>¿Buscas a alguien para tu equipo de IT?</h3>
@@ -518,10 +591,10 @@ const PROJECTS = [
    what:['Revisión de auth.log y access.log para reconstruir el ataque.','Script en Python que detecta automáticamente intentos de fuerza bruta por IP y usuario.','Línea temporal: 17 intentos fallidos, cambio a usuarios inválidos, escaneo web y acceso exitoso.','Clasificación por severidad (reconocimiento, fuerza bruta, intrusión crítica).','Recomendaciones: cambio de credenciales, Fail2Ban y hardening de SSH.']},
   {id:'bb', cat:'sec', label:'Ciberseguridad · Bug Bounty', st:'done',
    t:'Bug Bounty en HackerOne',
-   d:'Tres reportes de divulgación responsable sobre exposición de información sensible en un activo web de un programa público.',
-   tags:['HackerOne','Reconocimiento','Cloud storage','API keys','PII'],
-   ctx:'Trabajo personal. Los detalles del objetivo se omiten por política de divulgación responsable.',
-   what:['Fichero de configuración público que exponía una API key de un servicio cloud sin restricciones.','Listado de directorio habilitado en un bucket de almacenamiento.','Documento público con datos personales de empleados (PII).','Cada reporte con pasos para reproducir, impacto y prueba de concepto.']},
+   d:'21 reportes enviados a 3 programas públicos: 10 duplicados, 9 informativos, 1 N/A y 1 en revisión. Lista completa en la sección Bug Bounty.',
+   tags:['HackerOne','BOLA/IDOR','XSS','JWT','Cloud storage','API keys','PII'],
+   ctx:'Trabajo personal entre abril y agosto de 2026. Empresas y detalles técnicos omitidos por política de divulgación responsable.',
+   what:['Pruebas de control de acceso en APIs REST (BOLA/IDOR, mass assignment).','XSS almacenado con robo de cuenta y cadenas XSS + CSRF.','Exposición de API keys, buckets cloud y datos personales en activos públicos.','Análisis de configuraciones de JSON-RPC (batching, límites, WAF).','Cada reporte con pasos para reproducir, impacto, prueba de concepto y recomendación.','Aprendizaje: medir bien el impacto y revisar el alcance de cada programa antes de reportar.']},
   {id:'pentest', cat:'sec', label:'Ciberseguridad · Hacking ético', st:'done',
    t:'Pentesting de laboratorio sobre Metasploitable 2',
    d:'Serie de prácticas siguiendo la Cyber Kill Chain: reconocimiento, explotación, análisis del tráfico y contramedidas.',
@@ -600,6 +673,39 @@ $('#labs').innerHTML = LABS.map((l,i) => `
     <summary><span class="code">${l.code}</span><h3>${l.t}</h3><span class="n">${l.items.length} prácticas</span><span class="arr">›</span></summary>
     <div class="lab-list">${l.items.map(([a,b]) => `<div><b>${a}</b> — ${b}</div>`).join('')}</div>
   </details>`).join('');
+
+const BB = [
+  ['08/2026','Infraestructura','Batching sin límite en endpoint RPC de un proveedor externo','inf'],
+  ['08/2026','API','IDOR/BOLA: exposición del historial de transacciones mediante parámetro de cartera','inf'],
+  ['06/2026','Infraestructura','Agotamiento de recursos y bypass de rate-limit por batching JSON-RPC','inf'],
+  ['05/2026','API','BOLA en endpoint de carteras con exposición de metadatos','inf'],
+  ['05/2026','API','BOLA y fallo de aislamiento multi-tenant en la API de carteras','inf'],
+  ['05/2026','API','BOLA/IDOR: transferencia no autorizada por fuga de identificador de cartera maestra','inf'],
+  ['05/2026','Web','Cadena XSS almacenado + CSRF que permite acciones administrativas','inf'],
+  ['05/2026','Autenticación','Datos sensibles en logs y falsificación de JWT por secreto débil','na'],
+  ['04/2026','Exposición de datos','API key de servicio de mapas sin restricciones en fichero de configuración público','dup'],
+  ['04/2026','Exposición de datos','Listado de directorio habilitado en bucket de almacenamiento cloud','dup'],
+  ['04/2026','Exposición de datos','Datos personales (PII) de empleados en documento PDF público','dup'],
+  ['04/2026','Web','XSS almacenado en la agenda de destinatarios con robo de cuenta','dup'],
+  ['04/2026','Infraestructura','Subdomain takeover por instancia SaaS de soporte sin reclamar','inf'],
+  ['04/2026','API','Bypass de lógica de negocio por JSON parameter pollution','new'],
+  ['04/2026','Infraestructura','Consumo de recursos por batching JSON-RPC sin límite','dup'],
+  ['04/2026','Infraestructura','Bypass de WAF y aceptación de payloads de más de 15 MB en JSON-RPC','dup'],
+  ['04/2026','Infraestructura','Implementación de proxy no estándar en infraestructura de testnet','dup'],
+  ['04/2026','Infraestructura','Amplificación de respuesta en nodo RPC','dup'],
+  ['04/2026','Infraestructura','Profundidad de batch sin límite en nodo RPC gestionado','inf'],
+  ['04/2026','Infraestructura','Configuración de batching sin límite en varios proveedores RPC','dup'],
+  ['04/2026','API','IDOR sin autenticación y mass assignment: secuestro de tokens de notificaciones push','dup']
+];
+const ST = {dup:'✓ duplicado', inf:'informativo', na:'n/a', new:'◔ en revisión'};
+$('#bb-list').innerHTML = '<div class="bb-row head"><span>fecha</span><span>tipo</span><span>hallazgo</span><span>estado</span></div>' +
+  [...BB].sort((a,b) => ({dup:0,new:1,inf:2,na:3})[a[3]] - ({dup:0,new:1,inf:2,na:3})[b[3]]).map(([d,t,ti,s]) => `<div class="bb-row" data-s="${s}"><span class="dt">${d}</span><span class="ty">${t}</span><span class="ti">${ti}</span><span class="st ${s}">${ST[s]}</span></div>`).join('');
+$('#bb-filters').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#bb-filters button').forEach(x => x.classList.toggle('on', x===b));
+  const f = b.dataset.f;
+  document.querySelectorAll('.bb-row[data-s]').forEach(r => r.classList.toggle('hide', f!=='all' && !(f==='open' ? (r.dataset.s==='new'||r.dataset.s==='na') : r.dataset.s===f)));
+});
 
 /* filters */
 $('#filters').addEventListener('click', e => {
@@ -712,6 +818,7 @@ secs.forEach(s => navIO.observe(s));
   <span class="g">skills</span>       habilidades técnicas
   <span class="g">projects</span>     lista de proyectos
   <span class="g">open &lt;id&gt;</span>    abrir un proyecto (p. ej. open soc)
+  <span class="g">bugbounty</span>    reportes en HackerOne
   <span class="g">education</span>    formación
   <span class="g">experience</span>   experiencia
   <span class="g">contact</span>      datos de contacto
@@ -722,6 +829,7 @@ secs.forEach(s => navIO.observe(s));
 Estudiante de CFGS ASIX en DigitechFP (Barcelona). Buscando prácticas.`,
     skills: () => SKILLS.map(s => `<span class="c">${s.t.padEnd(30,' ')}</span> ${s.ch.slice(0,5).join(', ')}`).join('\n'),
     projects: () => PROJECTS.map(p => `<span class="g">${p.id.padEnd(10,' ')}</span> ${p.t} ${p.st==='wip'?'<span class="a">[wip]</span>':''}`).join('\n') + `\n\nUsa <span class="g">open &lt;id&gt;</span> para ver los detalles.`,
+    bugbounty: () => BB.map(([d,t,ti,s]) => `<span class="c">${d}</span> ${ST[s].padEnd(14,' ')} ${ti}`).join('\n') + '\n\n21 enviados · 10 duplicados · 9 informativos · 1 n/a · 1 en revisión',
     education: () => `<span class="c">2025–2027</span>  CFGS ASIX · DigitechFP (en curso)\n<span class="c">Completado</span> CFGM SMR · Institut Tecnològic de Barcelona`,
     experience: () => `<span class="c">06/2024–12/2024</span> Técnico de Soporte TI / Helpdesk Junior · Instituto Pablo Ruiz Picasso (FCT)\n<span class="c">Logística</span>       Mozo de almacén · Amazon Center / JEVASO (Mango)\n<span class="c">Atención</span>        Atención al cliente · JD Sports / Factor Energia`,
     contact: () => `email     <a class="g" href="mailto:danijunior070606@gmail.com">danijunior070606@gmail.com</a>\nteléfono  +34 665 663 753\nubicación Barcelona, España`,
