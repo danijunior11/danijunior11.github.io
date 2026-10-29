@@ -459,7 +459,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3 class="col">$ cat formacion.log</h3>
         <div class="tl">
           <div class="tl-i"><div class="when">2025 — 2027 · en curso</div><h4>CFGS Administración de Sistemas Informáticos en Red (ASIX)</h4><div class="org">DigitechFP · Barcelona</div>
-            <ul><li>Sistemas operativos, servicios de red, redes, seguridad y alta disponibilidad, bases de datos, hardware, lenguajes de marcas, Python y ciberseguridad.</li><li>Proyecto intermodular: plataforma de laboratorios virtuales con Proxmox.</li></ul></div>
+            <ul><li>Sistemas operativos, servicios de red, redes, seguridad y alta disponibilidad, bases de datos, hardware, lenguajes de marcas, Python y ciberseguridad.</li><li>Proyecto de equipo: SOC con Wazuh, Suricata y respuesta automatizada.</li></ul></div>
           <div class="tl-i"><div class="when">Completado</div><h4>CFGM Sistemas Microinformáticos y Redes (SMR)</h4><div class="org">Institut Tecnològic de Barcelona</div>
             <ul><li>Montaje y reparación de equipos, sistemas operativos, redes locales y servicios básicos.</li></ul></div>
           <div class="tl-i"><div class="when">Complementaria</div><h4>Bug Bounty · divulgación responsable</h4><div class="org">HackerOne</div>
@@ -559,14 +559,8 @@ const SKILLS = [
 ];
 
 const PROJECTS = [
-  {id:'labs', cat:'sys', label:'Sistemas · Virtualización', st:'wip', feat:true,
-   t:'Plataforma de Laboratorios Virtuales para DigitechFP',
-   d:'Proyecto intermodular: nube privada donde cada alumno accede desde el navegador a sus propias máquinas virtuales, sin instalar nada en su ordenador.',
-   tags:['Proxmox VE','Apache Guacamole','OpenLDAP','PostgreSQL','Nginx HTTPS','OPNsense','2FA'],
-   ctx:'Las VMs de ASIX ocupan 100–180 GB por alumno, hay compañeros sin espacio y cada entorno es distinto. Proponemos un piloto a coste 0 € con 3 PCs del centro y software libre. Equipo de 3 personas.',
-   what:['Clúster Proxmox de 3 nodos con plantillas y clones enlazados para crear VMs de alumno en segundos.','Acceso por navegador con Apache Guacamole, usuarios y grupos en OpenLDAP y base de datos PostgreSQL.','Seguridad: HTTPS con Nginx, segundo factor (2FA), VLANs y reglas en OPNsense, aislamiento entre alumnos.','Demo: alumno1 solo ve sus máquinas, el profesor ve todas; migración de VMs entre nodos sin cortar la sesión.','Estudio de escalabilidad a más de 100 alumnos y presupuesto de la versión real.']},
   {id:'soc', cat:'sec', label:'Ciberseguridad · SOC', st:'wip', feat:true,
-   t:'SOC en una caja — DIGI Security',
+   t:'SOC — DIGI Security',
    d:'Centro de operaciones de seguridad completo, desplegable con un solo comando en Docker. Mi parte: automatizar la respuesta a incidentes.',
    tags:['Wazuh','Suricata','Cowrie','Shuffle SOAR','DFIR-IRIS','Docker Compose','Telegram'],
    ctx:'Proyecto en equipo de 3: plataforma (Docker y despliegue), detección (Wazuh y Suricata) y respuesta (mi rol).',
