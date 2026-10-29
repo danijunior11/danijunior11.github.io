@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel Cortés · Portafolio ASIX</title>
+<meta name="description" content="Portafolio de Daniel Cortés Juncos — Técnico de Sistemas, Redes y Ciberseguridad. Estudiante de CFGS ASIX en DigitechFP.">
+<meta name="theme-color" content="#06080d">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2306080d'/><text x='50%' y='58%' text-anchor='middle' font-family='monospace' font-size='30' font-weight='700' fill='%2300e5a0'>&gt;_</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080d; --bg2:#0a0e16; --panel:#0d131e; --panel2:#111a28; --line:#1b2638; --line2:#253349;
+  --text:#d7e1ee; --muted:#8193ab; --dim:#56677f;
+  --green:#00e5a0; --cyan:#3ec7ff; --violet:#9b7bff; --amber:#ffb547; --red:#ff5f6d;
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace; --sans:'Space Grotesk',system-ui,sans-serif;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--green);color:#000}
+#net{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 0%,#000 10%,transparent 70%);opacity:.35}
+main,header,footer{position:relative;z-index:1}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+.g{color:var(--green)} .c{color:var(--cyan)} .v{color:var(--violet)} .a{color:var(--amber)} .m{color:var(--muted)}
+
+/* boot */
+#boot{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity .5s, visibility .5s}
+#boot.done{opacity:0;visibility:hidden}
+#boot pre{font-family:var(--mono);font-size:13px;color:var(--muted);min-width:min(520px,90vw);white-space:pre-wrap}
+#boot pre b{color:var(--green);font-weight:500}
+
+/* nav */
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+header.scrolled{background:rgba(6,8,13,.82);backdrop-filter:blur(12px);border-color:var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--mono);font-weight:700;font-size:15px;display:flex;gap:2px;align-items:center}
+.logo .cur{display:inline-block;width:8px;height:16px;background:var(--green);margin-left:4px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.links{display:flex;gap:4px;font-family:var(--mono);font-size:13px}
+.links a{padding:8px 12px;border-radius:8px;color:var(--muted);transition:.2s}
+.links a:hover,.links a.on{color:var(--text);background:var(--panel2)}
+.links a span{color:var(--green)}
+.burger{display:none;background:none;border:1px solid var(--line2);color:var(--text);border-radius:8px;width:40px;height:40px;font-size:18px;cursor:pointer}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:110px 0 60px}
+.hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:56px;align-items:center}
+.status{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;color:var(--green);border:1px solid rgba(0,229,160,.3);background:rgba(0,229,160,.06);padding:7px 14px;border-radius:99px;margin-bottom:26px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(0,229,160,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(0,229,160,0)}100%{box-shadow:0 0 0 0 rgba(0,229,160,0)}}
+.prompt{font-family:var(--mono);color:var(--muted);font-size:15px;margin-bottom:10px}
+h1{font-size:clamp(40px,6.4vw,76px);line-height:1.02;letter-spacing:-.03em;font-weight:700}
+h1 .last{background:linear-gradient(90deg,var(--green),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.role{font-family:var(--mono);font-size:clamp(16px,2vw,21px);margin:20px 0 22px;min-height:32px;color:var(--text)}
+.role .typed{color:var(--cyan)}
+.role .caret{display:inline-block;width:10px;height:1.1em;background:var(--cyan);vertical-align:-3px;animation:blink 1s steps(1) infinite;margin-left:2px}
+.lead{color:var(--muted);font-size:17.5px;max-width:580px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{font-family:var(--mono);font-size:14px;font-weight:500;padding:13px 20px;border-radius:10px;border:1px solid var(--line2);background:var(--panel);display:inline-flex;gap:10px;align-items:center;transition:.2s;cursor:pointer;color:var(--text)}
+.btn:hover{border-color:var(--green);transform:translateY(-2px)}
+.btn.pri{background:var(--green);color:#03110b;border-color:var(--green);font-weight:700}
+.btn.pri:hover{box-shadow:0 8px 30px -8px rgba(0,229,160,.6)}
+.avatar{position:relative;width:min(380px,80vw);aspect-ratio:1;margin:0 auto}
+.avatar img{position:absolute;inset:14%;width:72%;height:72%;border-radius:50%;object-fit:cover;filter:saturate(.95) contrast(1.05);border:2px solid var(--line2)}
+.core{position:absolute;inset:14%;border-radius:50%;border:2px solid var(--line2);background:radial-gradient(circle at 50% 40%,rgba(0,229,160,.14),transparent 62%),var(--panel);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 60px rgba(62,199,255,.08)}
+.core-net{position:absolute;inset:8%;width:84%;height:84%;color:var(--cyan);opacity:.55}
+.core-txt{position:relative;font-family:var(--mono);font-weight:700;font-size:clamp(44px,6vw,68px);line-height:1;letter-spacing:-.02em;background:linear-gradient(90deg,var(--green),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 40px rgba(0,229,160,.25)}
+.core-txt .m{-webkit-text-fill-color:var(--muted);font-size:.55em;margin-right:6px;vertical-align:.2em}
+.core-sub{position:relative;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:10px;letter-spacing:.08em;background:rgba(6,8,13,.7);padding:3px 10px;border-radius:99px;border:1px solid var(--line)}
+.ring{position:absolute;inset:4%;border-radius:50%;border:1px dashed var(--line2);animation:spin 40s linear infinite}
+.ring.r2{inset:0;border:1.5px solid transparent;border-top-color:var(--green);border-right-color:var(--cyan);animation-duration:7s}
+.ring.r3{inset:9%;border:1px solid transparent;border-bottom-color:var(--violet);animation-duration:11s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tag-float{position:absolute;font-family:var(--mono);font-size:12px;background:var(--panel);border:1px solid var(--line2);padding:6px 11px;border-radius:8px;white-space:nowrap;animation:float 6s ease-in-out infinite;box-shadow:0 10px 30px -10px #000}
+.tag-float.t1{top:10%;left:-6%} .tag-float.t2{top:46%;right:-10%;animation-delay:-2s} .tag-float.t3{bottom:6%;left:2%;animation-delay:-4s}
+@keyframes float{50%{transform:translateY(-10px)}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:64px}
+.stat{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),transparent);border-radius:var(--r);padding:18px 20px}
+.stat b{font-family:var(--mono);font-size:30px;color:var(--text);display:block;line-height:1.1}
+.stat span{font-size:13.5px;color:var(--muted)}
+
+/* sections */
+section{padding:100px 0}
+.sec-head{margin-bottom:44px}
+.sec-head .idx{font-family:var(--mono);color:var(--green);font-size:13.5px;letter-spacing:.04em}
+.sec-head h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;line-height:1.15;margin-top:6px}
+.sec-head p{color:var(--muted);max-width:640px;margin-top:10px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* window */
+.win{border:1px solid var(--line2);background:var(--panel);border-radius:var(--r);overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.win-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--bg2);font-family:var(--mono);font-size:12.5px;color:var(--dim)}
+.win-bar i{width:11px;height:11px;border-radius:50%;background:#2a3446}
+.win-bar i:nth-child(1){background:#ff5f57}.win-bar i:nth-child(2){background:#febc2e}.win-bar i:nth-child(3){background:#28c840}
+.win-bar span{margin-left:10px}
+.win-body{padding:26px 28px}
+
+.about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:24px}
+.about p{color:#b9c6d8;margin-bottom:14px;font-size:16.5px}
+.about p:last-child{margin-bottom:0}
+.kv{font-family:var(--mono);font-size:13.5px;display:grid;gap:12px}
+.kv div{display:grid;grid-template-columns:110px 1fr;gap:10px;border-bottom:1px dashed var(--line);padding-bottom:10px}
+.kv div:last-child{border:0;padding:0}
+.kv dt{color:var(--dim)} .kv dd{color:var(--text)}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.sk{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:22px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.sk:hover{border-color:var(--line2);transform:translateY(-3px)}
+.sk::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:var(--acc,var(--green));opacity:.8}
+.sk-h{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.sk-ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--acc) 12%,transparent);color:var(--acc);border:1px solid color-mix(in srgb,var(--acc) 30%,transparent)}
+.sk-ic svg{width:21px;height:21px}
+.sk-h h3{font-size:17.5px;line-height:1.2}
+.sk-h small{font-family:var(--mono);font-size:11.5px;color:var(--dim);display:block;margin-top:2px}
+.lv{display:grid;gap:9px;margin-bottom:16px}
+.lv-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;font-size:14.5px}
+.bars{display:flex;gap:3px}
+.bars i{width:16px;height:6px;border-radius:2px;background:var(--line2)}
+.bars i.f{background:var(--acc)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:11.5px;padding:4px 9px;border-radius:6px;background:var(--bg2);border:1px solid var(--line);color:var(--muted)}
+.legend{display:flex;gap:18px;font-family:var(--mono);font-size:12px;color:var(--dim);margin:-24px 0 26px;flex-wrap:wrap}
+.legend span{display:inline-flex;gap:8px;align-items:center}
+
+/* projects */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.filters button{font-family:var(--mono);font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid var(--line2);background:transparent;color:var(--muted);cursor:pointer;transition:.2s}
+.filters button:hover{color:var(--text)}
+.filters button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.pj{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s;position:relative}
+.pj:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(0,229,160,.35)}
+.pj.feat{grid-column:span 2;background:radial-gradient(120% 140% at 100% 0%,rgba(62,199,255,.08),transparent 50%),var(--panel)}
+.pj-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-family:var(--mono);font-size:12px}
+.pj-cat{color:var(--cyan)}
+.badge{padding:3px 9px;border-radius:99px;font-size:11px;border:1px solid}
+.badge.done{color:var(--green);border-color:rgba(0,229,160,.35);background:rgba(0,229,160,.06)}
+.badge.wip{color:var(--amber);border-color:rgba(255,181,71,.35);background:rgba(255,181,71,.06)}
+.pj h3{font-size:20px;line-height:1.25;margin-bottom:8px}
+.pj p{color:var(--muted);font-size:15px;flex:1}
+.pj .chips{margin-top:16px}
+.pj-more{font-family:var(--mono);font-size:12.5px;color:var(--green);margin-top:16px}
+.pj.hide{display:none}
+
+/* modal */
+dialog{border:1px solid var(--line2);background:var(--panel);color:var(--text);border-radius:var(--r);max-width:720px;width:calc(100% - 32px);padding:0;margin:auto;box-shadow:0 40px 100px -20px #000}
+dialog::backdrop{background:rgba(3,5,9,.75);backdrop-filter:blur(4px)}
+.md-body{padding:28px;max-height:75vh;overflow:auto}
+.md-body h3{font-size:24px;line-height:1.2;margin:6px 0 10px}
+.md-body .sub{color:var(--muted);margin-bottom:18px}
+.md-body h4{font-family:var(--mono);font-size:12.5px;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin:20px 0 10px}
+.md-body ul{list-style:none;display:grid;gap:8px}
+.md-body li{padding-left:22px;position:relative;color:#bfcbdc;font-size:15px}
+.md-body li::before{content:"▹";position:absolute;left:0;color:var(--green)}
+.md-close{background:none;border:0;color:var(--muted);font-family:var(--mono);cursor:pointer;margin-left:auto;font-size:13px}
+.md-close:hover{color:var(--text)}
+
+/* labs */
+.labs{display:grid;gap:12px}
+.lab{border:1px solid var(--line);background:var(--panel);border-radius:12px;overflow:hidden}
+.lab summary{list-style:none;cursor:pointer;padding:18px 22px;display:flex;align-items:center;gap:16px}
+.lab summary::-webkit-details-marker{display:none}
+.lab summary .code{font-family:var(--mono);font-size:12px;color:var(--dim);min-width:58px}
+.lab summary h3{font-size:17px;flex:1;line-height:1.3}
+.lab summary .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.lab summary .arr{font-family:var(--mono);color:var(--green);transition:transform .25s}
+.lab[open] summary .arr{transform:rotate(90deg)}
+.lab-list{padding:0 22px 20px 96px;display:grid;gap:10px}
+.lab-list div{font-size:14.5px;color:#bac7d9;padding-left:18px;position:relative}
+.lab-list div::before{content:"›";position:absolute;left:0;color:var(--cyan);font-family:var(--mono)}
+.lab-list b{color:var(--text);font-weight:600}
+
+/* timeline */
+.tl-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.tl-grid h3.col{font-family:var(--mono);font-size:14px;color:var(--muted);margin-bottom:20px;font-weight:500}
+.tl{position:relative;padding-left:28px;display:grid;gap:28px}
+.tl::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--green),var(--line2))}
+.tl-i{position:relative}
+.tl-i::before{content:"";position:absolute;left:-28px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--green)}
+.tl-i .when{font-family:var(--mono);font-size:12px;color:var(--green)}
+.tl-i h4{font-size:18px;line-height:1.3;margin:4px 0 2px}
+.tl-i .org{color:var(--cyan);font-size:14.5px}
+.tl-i ul{list-style:none;margin-top:10px;display:grid;gap:6px}
+.tl-i li{color:var(--muted);font-size:14.5px;padding-left:16px;position:relative}
+.tl-i li::before{content:"-";position:absolute;left:0;color:var(--dim)}
+
+/* terminal */
+.term{font-family:var(--mono);font-size:14px}
+.term .win-body{height:380px;overflow:auto;padding:20px 22px;cursor:text}
+.term-line{white-space:pre-wrap;word-break:break-word;line-height:1.65}
+.term-in{display:flex;gap:8px;align-items:center}
+.term-in input{flex:1;background:transparent;border:0;outline:0;color:var(--text);font:inherit;caret-color:var(--green)}
+.ps{color:var(--green)}
+.hint{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hint button{font-family:var(--mono);font-size:12px;padding:6px 11px;border-radius:7px;border:1px solid var(--line2);background:var(--panel);color:var(--muted);cursor:pointer}
+.hint button:hover{color:var(--green);border-color:var(--green)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:stretch}
+.contact-card{border:1px solid var(--line2);border-radius:var(--r);padding:36px;background:radial-gradient(100% 120% at 0% 0%,rgba(0,229,160,.10),transparent 60%),var(--panel)}
+.contact-card h3{font-size:clamp(26px,3.4vw,36px);line-height:1.15;letter-spacing:-.02em;margin-bottom:12px}
+.contact-card p{color:var(--muted);margin-bottom:26px}
+.clist{display:grid;gap:12px}
+.citem{display:flex;align-items:center;gap:14px;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:16px 18px;transition:.2s}
+a.citem:hover{border-color:var(--green);transform:translateX(4px)}
+.citem .ic{width:40px;height:40px;border-radius:10px;background:var(--bg2);display:grid;place-items:center;color:var(--green);flex:none}
+.citem small{display:block;font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+.citem span{font-size:15.5px;word-break:break-all}
+
+footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:960px){
+  .hero-grid,.about-grid,.tl-grid,.contact{grid-template-columns:1fr}
+  .hero-grid .avatar{order:-1;width:min(280px,70vw)}
+  .tag-float.t2{right:-4%}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .pj.feat{grid-column:auto}
+  .links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:rgba(6,8,13,.97);border-bottom:1px solid var(--line);padding:12px 16px}
+  .links.open{display:flex}
+  .burger{display:block}
+  .lab-list{padding:0 18px 18px 18px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  section{padding:72px 0}
+  .skills,.projects{grid-template-columns:1fr}
+  .win-body{padding:20px}
+  .kv div{grid-template-columns:90px 1fr}
+  .lab summary{flex-wrap:wrap;gap:6px 12px;padding:16px}
+  .lab summary .code{min-width:auto}
+  .contact-card{padding:24px}
+  .tag-float{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="boot"><pre id="bootlog"></pre></div>
+<canvas id="net"></canvas>
+<div class="grid-bg"></div>
+
+<header id="top">
+  <nav class="wrap">
+    <a href="#inicio" class="logo"><span class="g">daniel</span><span class="m">@</span><span class="c">asix</span><span class="m">:~$</span><span class="cur"></span></a>
+    <div class="links" id="links">
+      <a href="#sobre-mi"><span>01.</span> sobre_mí</a>
+      <a href="#habilidades"><span>02.</span> habilidades</a>
+      <a href="#proyectos"><span>03.</span> proyectos</a>
+      <a href="#laboratorios"><span>04.</span> labs</a>
+      <a href="#trayectoria"><span>05.</span> trayectoria</a>
+      <a href="#contacto"><span>06.</span> contacto</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
+  </nav>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="status"><i></i>Disponible para prácticas en empresa · 2026–2027</div>
+        <div class="prompt">$ whoami</div>
+        <h1>Daniel<br><span class="last">Cortés Juncos</span></h1>
+        <div class="role"><span class="m">&gt; </span><span class="typed" id="typed"></span><span class="caret"></span></div>
+        <p class="lead">Técnico en Sistemas Microinformáticos y Redes y estudiante de <b style="color:var(--text)">CFGS ASIX</b>. Despliego dominios Active Directory y Samba, diseño redes segmentadas, monto entornos virtualizados y analizo incidentes de seguridad. Todo documentado.</p>
+        <div class="cta">
+          <a href="#proyectos" class="btn pri">./ver_proyectos.sh →</a>
+          <a href="assets/CV_Daniel_Cortes_Juncos.pdf" class="btn" download>⤓ Descargar CV</a>
+          <a href="#contacto" class="btn">✉ Contacto</a>
+        </div>
+      </div>
+      <div class="avatar">
+        <div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div>
+        <div class="core" aria-hidden="true">
+          <svg class="core-net" viewBox="0 0 200 200">
+            <g stroke="currentColor" stroke-width=".8" fill="none" opacity=".5">
+              <path d="M100 30 L40 75 L60 150 L140 150 L160 75 Z"/><path d="M100 30 L100 100 M40 75 L100 100 M60 150 L100 100 M140 150 L100 100 M160 75 L100 100"/>
+            </g>
+            <g fill="currentColor"><circle cx="100" cy="30" r="3.2"/><circle cx="40" cy="75" r="3.2"/><circle cx="60" cy="150" r="3.2"/><circle cx="140" cy="150" r="3.2"/><circle cx="160" cy="75" r="3.2"/></g>
+            <circle r="2.6" fill="#00e5a0"><animateMotion dur="3.2s" repeatCount="indefinite" path="M100 30 L100 100 L140 150"/></circle>
+            <circle r="2.6" fill="#3ec7ff"><animateMotion dur="4.1s" repeatCount="indefinite" path="M40 75 L100 100 L160 75"/></circle>
+            <circle r="2.6" fill="#9b7bff"><animateMotion dur="3.7s" repeatCount="indefinite" path="M60 150 L100 100 L100 30"/></circle>
+          </svg>
+          <div class="core-txt"><span class="m">&gt;_</span>DC</div>
+          <div class="core-sub">sysadmin · netsec</div>
+        </div>
+        <div class="tag-float t1"><span class="g">●</span> Active Directory</div>
+        <div class="tag-float t2"><span class="c">●</span> Redes &amp; VLANs</div>
+        <div class="tag-float t3"><span class="v">●</span> Blue Team / SOC</div>
+      </div>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><b data-count="60">0</b><span>prácticas técnicas documentadas</span></div>
+      <div class="stat"><b data-count="8">0</b><span>módulos ASIX cursados</span></div>
+      <div class="stat"><b data-count="5">0</b><span>proyectos de infraestructura en equipo</span></div>
+      <div class="stat"><b data-count="3">0</b><span>reportes de bug bounty (HackerOne)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="sobre-mi">
+  <div class="wrap">
+    <div class="sec-head reveal"><div class="idx">// 01 — sobre_mí</div><h2>Del soporte técnico a la administración de sistemas</h2></div>
+    <div class="about-grid">
+      <div class="win reveal">
+        <div class="win-bar"><i></i><i></i><i></i><span>~/daniel/about.md</span></div>
+        <div class="win-body about">
+          <p>Empecé reparando y manteniendo equipos en el <b>CFGM de Sistemas Microinformáticos y Redes</b> y en mis prácticas como <b>Helpdesk Junior</b>, atendiendo a usuarios y resolviendo incidencias de hardware, software y red.</p>
+          <p>Ahora, en el <b>CFGS de Administración de Sistemas Informáticos en Red</b>, trabajo con servidores Windows y Linux, servicios de directorio, redes segmentadas, bases de datos y virtualización. Lo que más me motiva es la <b class="g">ciberseguridad defensiva</b>: analizar logs, entender cómo se produce un ataque y automatizar la respuesta.</p>
+          <p>Vengo también de trabajos en logística y atención al cliente, donde aprendí a trabajar bajo presión, en equipo y con sistemas WMS y escáneres RF. Busco unas prácticas en un equipo de IT donde aportar y seguir aprendiendo.</p>
+        </div>
+      </div>
+      <div class="win reveal">
+        <div class="win-bar"><i></i><i></i><i></i><span>~/daniel/profile.conf</span></div>
+        <div class="win-body">
+          <dl class="kv">
+            <div><dt>nombre</dt><dd>Daniel Cortés Juncos</dd></div>
+            <div><dt>ubicación</dt><dd>Barcelona, España</dd></div>
+            <div><dt>estudios</dt><dd>CFGS ASIX · DigitechFP</dd></div>
+            <div><dt>enfoque</dt><dd class="g">Sistemas · Redes · Ciberseguridad</dd></div>
+            <div><dt>idiomas</dt><dd>Inglés B2</dd></div>
+            <div><dt>estado</dt><dd><span class="g">●</span> buscando prácticas</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="habilidades">
+  <div class="wrap">
+    <div class="sec-head reveal"><div class="idx">// 02 — habilidades_técnicas</div><h2>Stack técnico</h2><p>Herramientas y tecnologías que he usado en prácticas reales de laboratorio, con el nivel con el que me siento cómodo trabajando.</p></div>
+    <div class="legend reveal" style="--acc:var(--green)"><span><span class="bars"><i class="f"></i><i class="f"></i><i class="f"></i></span> sólido / uso habitual</span><span><span class="bars"><i class="f"></i><i class="f"></i><i></i></span> intermedio</span><span><span class="bars"><i class="f"></i><i></i><i></i></span> base / en aprendizaje</span></div>
+    <div class="skills" id="skills"></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="proyectos">
+  <div class="wrap">
+    <div class="sec-head reveal"><div class="idx">// 03 — proyectos</div><h2>Proyectos destacados</h2><p>Haz clic en cualquier proyecto para ver qué hice, cómo y con qué tecnologías.</p></div>
+    <div class="filters reveal" id="filters">
+      <button class="on" data-f="all">todos</button>
+      <button data-f="sys">sistemas</button>
+      <button data-f="net">redes</button>
+      <button data-f="sec">ciberseguridad</button>
+      <button data-f="dev">web &amp; bbdd</button>
+    </div>
+    <div class="projects" id="projects"></div>
+  </div>
+</section>
+
+<dialog id="modal">
+  <div class="win-bar"><i></i><i></i><i></i><span id="md-path"></span><button class="md-close" id="md-close">[esc] cerrar</button></div>
+  <div class="md-body" id="md-body"></div>
+</dialog>
+
+<!-- LABS -->
+<section id="laboratorios">
+  <div class="wrap">
+    <div class="sec-head reveal"><div class="idx">// 04 — laboratorios</div><h2>Prácticas por módulo</h2><p>Una selección de las prácticas del grado. Cada una está documentada con capturas, comandos y verificación.</p></div>
+    <div class="labs" id="labs"></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="trayectoria">
+  <div class="wrap">
+    <div class="sec-head reveal"><div class="idx">// 05 — trayectoria</div><h2>Formación y experiencia</h2></div>
+    <div class="tl-grid">
+      <div class="reveal">
+        <h3 class="col">$ cat formacion.log</h3>
+        <div class="tl">
+          <div class="tl-i"><div class="when">2025 — 2027 · en curso</div><h4>CFGS Administración de Sistemas Informáticos en Red (ASIX)</h4><div class="org">DigitechFP · Barcelona</div>
+            <ul><li>Sistemas operativos, servicios de red, redes, seguridad y alta disponibilidad, bases de datos, hardware, lenguajes de marcas, Python y ciberseguridad.</li><li>Proyecto intermodular: plataforma de laboratorios virtuales con Proxmox.</li></ul></div>
+          <div class="tl-i"><div class="when">Completado</div><h4>CFGM Sistemas Microinformáticos y Redes (SMR)</h4><div class="org">Institut Tecnològic de Barcelona</div>
+            <ul><li>Montaje y reparación de equipos, sistemas operativos, redes locales y servicios básicos.</li></ul></div>
+          <div class="tl-i"><div class="when">Complementaria</div><h4>Bug Bounty · divulgación responsable</h4><div class="org">HackerOne</div>
+            <ul><li>3 reportes documentados de exposición de información sensible.</li></ul></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <h3 class="col">$ cat experiencia.log</h3>
+        <div class="tl">
+          <div class="tl-i"><div class="when">06/2024 — 12/2024</div><h4>Técnico de Soporte TI / Helpdesk Junior</h4><div class="org">Instituto Pablo Ruiz Picasso (prácticas FCT) · Barcelona</div>
+            <ul><li>Soporte de primer nivel: registro y resolución de incidencias de hardware y software.</li><li>Mantenimiento de la red LAN del centro, switches y direccionamiento TCP/IP.</li><li>Instalación y maquetación de Windows y Linux; permisos, recursos compartidos e impresoras en red.</li></ul></div>
+          <div class="tl-i"><div class="when">Logística</div><h4>Mozo de Almacén y Operaciones Logísticas</h4><div class="org">Amazon Center · JEVASO (Mango)</div>
+            <ul><li>Gestión de inventario y clasificación de stock en entornos de alta productividad.</li><li>Uso diario de sistemas WMS y escáneres RF.</li></ul></div>
+          <div class="tl-i"><div class="when">Atención al cliente</div><h4>Atención al Cliente y Soporte Telefónico</h4><div class="org">JD Sports · Factor Energia</div>
+            <ul><li>Resolución de incidencias de clientes y comunicación en entornos de ritmo rápido.</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TERMINAL -->
+<section id="terminal">
+  <div class="wrap">
+    <div class="sec-head reveal"><div class="idx">// extra — shell</div><h2>¿Prefieres la terminal?</h2><p>Explora el portafolio con comandos. Escribe <span class="mono g">help</span> para empezar.</p></div>
+    <div class="win term reveal">
+      <div class="win-bar"><i></i><i></i><i></i><span>daniel@asix: ~ — bash</span></div>
+      <div class="win-body" id="term"><div id="term-out"></div><div class="term-in"><span class="ps">daniel@asix:~$</span><input id="term-input" autocomplete="off" spellcheck="false" aria-label="Comando de terminal"></div></div>
+    </div>
+    <div class="hint reveal" id="hint"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="sec-head reveal"><div class="idx">// 06 — contacto</div><h2>Hablemos</h2></div>
+    <div class="contact">
+      <div class="contact-card reveal">
+        <h3>¿Buscas a alguien para tu equipo de IT?</h3>
+        <p>Estoy disponible para realizar las prácticas del CFGS ASIX. Escríbeme y te respondo lo antes posible.</p>
+        <div class="cta" style="margin-top:0"><a class="btn pri" href="mailto:danijunior070606@gmail.com">✉ Enviar email</a><a href="assets/CV_Daniel_Cortes_Juncos.pdf" class="btn" download>⤓ Descargar CV</a></div>
+      </div>
+      <div class="clist reveal">
+        <a class="citem" href="mailto:danijunior070606@gmail.com"><div class="ic">@</div><div><small>email</small><span>danijunior070606@gmail.com</span></div></a>
+        <a class="citem" href="tel:+34665663753"><div class="ic">☏</div><div><small>teléfono</small><span>+34 665 663 753</span></div></a>
+        <div class="citem"><div class="ic">⌖</div><div><small>ubicación</small><span>Barcelona, España</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Daniel Cortés Juncos</span><span>hecho a mano con HTML, CSS y JS · <a href="#inicio" class="g">↑ volver arriba</a></span></div></footer>
+
+<script>
+/* ---------- DATA ---------- */
+const ICON = {
+  server:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01M7 17.5h.01M11 6.5h6M11 17.5h6"/></svg>',
+  net:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-2.5h14V17"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>',
+  cloud:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6 9.5 4.25 4.25 0 0 0 7 18z"/></svg>',
+  db:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>',
+  code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>',
+  cpu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>'
+};
+
+const SKILLS = [
+  {t:'Sistemas Windows', s:'Windows Server 2016/2019/2022', ic:'server', acc:'var(--green)',
+   lv:[['Active Directory DS (OUs, usuarios, grupos, delegación)',3],['GPO y políticas de contraseña granulares (PSO)',3],['DNS · DHCP · roles FSMO · auditoría',2],['PowerShell para administración',2]],
+   ch:['AD DS','GPO','FSMO','Papelera AD','Event Viewer','RAID 1 (mirror)','RDP']},
+  {t:'Sistemas Linux', s:'Ubuntu Server 24.04 · Debian · Kali', ic:'server', acc:'var(--cyan)',
+   lv:[['Samba 4 AD DC y unión de clientes Windows/Ubuntu',3],['systemd: servicios propios, journalctl, autorecuperación',3],['Bash, cron/crontab y automatización',2],['RAID mdadm, LVM, particionado y ACLs',2]],
+   ch:['Netplan','Kerberos','nice/renice','señales POSIX','find · tar','Apache2','CUPS','SSH']},
+  {t:'Redes', s:'Diseño, direccionamiento y diagnóstico', ic:'net', acc:'var(--violet)',
+   lv:[['TCP/IP, subnetting IPv4 y planes de direccionamiento',3],['Cisco Packet Tracer: LAN, switches, diagnóstico por capas',3],['DNS (zonas, delegación) y DHCP (reservas, conflictos)',2],['VLANs y firewall OPNsense',2]],
+   ch:['Modelo OSI','ARP · ICMP','VLAN','Cisco IOS','OPNsense','Wireshark','DHCP','DNS']},
+  {t:'Ciberseguridad', s:'Blue team, análisis y hacking ético', ic:'shield', acc:'var(--red)',
+   lv:[['Análisis de tráfico y logs (Wireshark, auth.log, access.log)',3],['Reconocimiento y explotación en laboratorio (Nmap, Metasploit)',2],['Respuesta a incidentes, forense y MITRE ATT&CK',2],['SOC: Wazuh, Suricata, SOAR (Shuffle), DFIR-IRIS',1]],
+   ch:['Nmap','Metasploitable 2','Hashcat','Kali Linux','Kill Chain','SPF/DKIM/DMARC','2FA','RGPD · LOPDGDD · ENS']},
+  {t:'Virtualización y contenedores', s:'Laboratorios y nube privada', ic:'cloud', acc:'var(--amber)',
+   lv:[['VirtualBox: redes internas/NAT/puente, snapshots',3],['Proxmox VE en clúster',2],['Docker y Docker Compose',2],['Apache Guacamole, Nginx (HTTPS), OpenLDAP',1]],
+   ch:['VirtualBox','Proxmox VE','Docker','Compose','Guacamole','Nginx','Clonezilla']},
+  {t:'Bases de datos', s:'Relacionales', ic:'db', acc:'var(--cyan)',
+   lv:[['SQL: modelado E/R, DDL, DML y consultas multitabla',3],['PostgreSQL: psql, vistas, transacciones y bloqueos',2],['MySQL / MariaDB y SQLite',2]],
+   ch:['PostgreSQL','MySQL','SQLite','ACID','CHECK OPTION','pgAdmin','ODBC']},
+  {t:'Scripting y desarrollo', s:'Automatización y web', ic:'code', acc:'var(--green)',
+   lv:[['Python para ciberseguridad (parsers de logs, cifrado)',2],['PHP 8: sesiones, cookies, roles y hashing de contraseñas',2],['HTML, CSS, JavaScript, XML/XPath',2],['Git y GitHub',2]],
+   ch:['Python','Bash','PowerShell','PHP','Flask','JavaScript','XML','WordPress','Git']},
+  {t:'Hardware y CPD', s:'Soporte, mantenimiento y documentación', ic:'cpu', acc:'var(--violet)',
+   lv:[['Montaje, diagnóstico y reparación de equipos',3],['Soporte helpdesk N1 e inventario',3],['Procedimientos de CPD: rack, DRP, backup 3-2-1',2]],
+   ch:['Diagnóstico POST/BIOS','SSD · RAM · CPU','GLPI / Snipe-IT','Backup 3-2-1','DRP','RAEE']},
+  {t:'Monitorización', s:'Disponibilidad y rendimiento', ic:'chart', acc:'var(--amber)',
+   lv:[['Monitorización de rendimiento y eventos del sistema',2],['Zabbix / Nagios y Uptime Kuma',1],['Auditbeat y centralización de logs',1]],
+   ch:['Zabbix','Nagios','Uptime Kuma','Auditbeat','journalctl','Telegram alerts']}
+];
+
+const PROJECTS = [
+  {id:'labs', cat:'sys', label:'Sistemas · Virtualización', st:'wip', feat:true,
+   t:'Plataforma de Laboratorios Virtuales para DigitechFP',
+   d:'Proyecto intermodular: nube privada donde cada alumno accede desde el navegador a sus propias máquinas virtuales, sin instalar nada en su ordenador.',
+   tags:['Proxmox VE','Apache Guacamole','OpenLDAP','PostgreSQL','Nginx HTTPS','OPNsense','2FA'],
+   ctx:'Las VMs de ASIX ocupan 100–180 GB por alumno, hay compañeros sin espacio y cada entorno es distinto. Proponemos un piloto a coste 0 € con 3 PCs del centro y software libre. Equipo de 3 personas.',
+   what:['Clúster Proxmox de 3 nodos con plantillas y clones enlazados para crear VMs de alumno en segundos.','Acceso por navegador con Apache Guacamole, usuarios y grupos en OpenLDAP y base de datos PostgreSQL.','Seguridad: HTTPS con Nginx, segundo factor (2FA), VLANs y reglas en OPNsense, aislamiento entre alumnos.','Demo: alumno1 solo ve sus máquinas, el profesor ve todas; migración de VMs entre nodos sin cortar la sesión.','Estudio de escalabilidad a más de 100 alumnos y presupuesto de la versión real.']},
+  {id:'soc', cat:'sec', label:'Ciberseguridad · SOC', st:'wip', feat:true,
+   t:'SOC en una caja — DIGI Security',
+   d:'Centro de operaciones de seguridad completo, desplegable con un solo comando en Docker. Mi parte: automatizar la respuesta a incidentes.',
+   tags:['Wazuh','Suricata','Cowrie','Shuffle SOAR','DFIR-IRIS','Docker Compose','Telegram'],
+   ctx:'Proyecto en equipo de 3: plataforma (Docker y despliegue), detección (Wazuh y Suricata) y respuesta (mi rol).',
+   what:['Despliegue de Shuffle (SOAR) y DFIR-IRIS dentro del stack Docker Compose común.','Integración Wazuh → Shuffle por webhook para alertas de nivel alto.','Playbook 1: alerta → aviso en Telegram con host, regla y técnica MITRE ATT&CK.','Playbook 2: alerta → creación automática de un caso en DFIR-IRIS.','Playbook 3 (respuesta activa): bloqueo de la IP atacante.','Ataques simulados desde Kali (nmap, fuerza bruta SSH, honeypot Cowrie) para validar el circuito.']},
+  {id:'hos', cat:'sys', label:'Sistemas · Redes · BBDD', st:'wip',
+   t:'Infraestructura virtualizada para un centro logístico',
+   d:'Laboratorio multiservidor que simula los procesos de un almacén (recepción, ubicación, picking y expedición) con una aplicación WMS propia.',
+   tags:['OPNsense','Windows Server','Active Directory','Ubuntu Server','PostgreSQL','Python/Flask'],
+   ctx:'Proyecto final de ASIX inspirado en mi experiencia en logística. Simulación independiente con datos ficticios y presupuesto adicional de 0 €.',
+   what:['Red protegida 192.168.10.0/24 tras firewall OPNsense con filtrado por puertos.','Windows Server con AD DS, DNS de dominio, OUs y GPO.','Aplicación WMS en Python/Flask sobre Ubuntu Server conectada a PostgreSQL.','Scripts de copia de seguridad de la base de datos y plan de recuperación ante desastres (DRP).','Plan de monitorización y de pruebas con evidencias.']},
+  {id:'aurum', cat:'sys', label:'Sistemas · Dominio Linux', st:'done',
+   t:'AurumDrive — Infraestructura para un concesionario de lujo',
+   d:'Dominio corporativo sobre Ubuntu Server 24.04 con Samba AD DC, almacenamiento redundante, impresión, monitorización y acceso remoto seguro.',
+   tags:['Samba AD DC','Ubuntu 24.04','RAID 1 mdadm','CUPS','SSH','Zabbix/Nagios','rsync'],
+   ctx:'Proyecto en equipo (SilverLine Systems, 4 personas) para un cliente ficticio con presupuesto máximo de 30.000 €.',
+   what:['Servidor con RAID 1 por software (mdadm) y disco de datos separado.','Samba como controlador de dominio: OUs, grupos de seguridad, usuarios por departamento y perfiles móviles.','Unión al dominio de clientes Windows 11 Pro y Ubuntu 24.04 por DHCP.','Recursos compartidos con permisos por grupo (lectura/escritura, solo lectura, sin acceso).','Servidor de impresión CUPS, SSH restringido al grupo IT_ADM, monitorización y copias con prueba de restauración.']},
+  {id:'ir', cat:'sec', label:'Ciberseguridad · Forense', st:'done',
+   t:'Informe de incidente IR-2026-06',
+   d:'Análisis de un ataque real de laboratorio contra Metasploitable 2: escaneo, fuerza bruta SSH e intrusión. Detección con un script propio en Python.',
+   tags:['Python','auth.log','access.log','Nmap NSE','Timeline','Fail2Ban'],
+   ctx:'Examen práctico de Python y Ciberseguridad (monitorización y análisis de logs).',
+   what:['Revisión de auth.log y access.log para reconstruir el ataque.','Script en Python que detecta automáticamente intentos de fuerza bruta por IP y usuario.','Línea temporal: 17 intentos fallidos, cambio a usuarios inválidos, escaneo web y acceso exitoso.','Clasificación por severidad (reconocimiento, fuerza bruta, intrusión crítica).','Recomendaciones: cambio de credenciales, Fail2Ban y hardening de SSH.']},
+  {id:'bb', cat:'sec', label:'Ciberseguridad · Bug Bounty', st:'done',
+   t:'Bug Bounty en HackerOne',
+   d:'Tres reportes de divulgación responsable sobre exposición de información sensible en un activo web de un programa público.',
+   tags:['HackerOne','Reconocimiento','Cloud storage','API keys','PII'],
+   ctx:'Trabajo personal. Los detalles del objetivo se omiten por política de divulgación responsable.',
+   what:['Fichero de configuración público que exponía una API key de un servicio cloud sin restricciones.','Listado de directorio habilitado en un bucket de almacenamiento.','Documento público con datos personales de empleados (PII).','Cada reporte con pasos para reproducir, impacto y prueba de concepto.']},
+  {id:'pentest', cat:'sec', label:'Ciberseguridad · Hacking ético', st:'done',
+   t:'Pentesting de laboratorio sobre Metasploitable 2',
+   d:'Serie de prácticas siguiendo la Cyber Kill Chain: reconocimiento, explotación, análisis del tráfico y contramedidas.',
+   tags:['Kali','Nmap','Metasploit','Wireshark','Hashcat','MITRE ATT&CK'],
+   ctx:'Módulo de Python y Ciberseguridad.',
+   what:['Reconocimiento con nmap -sS -sV -O y mapeo a la Kill Chain y MITRE ATT&CK.','Backdoor de vsftpd 2.3.4 (CVE-2011-2523) y bindshell en el puerto 1524: explotación y análisis forense de la cadena de procesos.','Captura y análisis del tráfico de la explotación con Wireshark.','Enumeración de directorios web, hashes y rainbow tables, autenticación SSH con claves RSA.']},
+  {id:'ad', cat:'sys', label:'Sistemas · Active Directory', st:'done',
+   t:'Active Directory TechCorp de principio a fin',
+   d:'Del diseño de OUs a la alta disponibilidad: delegación, GPO, contraseñas granulares, segundo DC, FSMO, auditoría y papelera de reciclaje.',
+   tags:['Windows Server 2022','AD DS','GPO','PSO','FSMO','dsacls'],
+   ctx:'Prácticas del módulo de Administración de Sistemas Operativos.',
+   what:['Estructura de OUs por departamentos y delegación de control (desbloqueo de cuentas para soporte).','GPO con filtrado de seguridad: bloqueo del Panel de control y de USB.','Segundo controlador de dominio, transferencia de roles FSMO y verificación de la replicación.','Políticas de auditoría y recuperación de objetos con la papelera de AD.']},
+  {id:'samba', cat:'sys', label:'Sistemas · Linux', st:'done',
+   t:'Samba 4 AD DC y servicios systemd',
+   d:'Controlador de dominio Active Directory sobre Ubuntu con Samba, cliente Windows unido y servicios propios con recuperación automática.',
+   tags:['Samba 4','Kerberos','systemd','journalctl','cron','Bash'],
+   ctx:'Prácticas del módulo de Administración de Sistemas Operativos.',
+   what:['IP estática con Netplan, resolución local, liberación del puerto 53 (systemd-resolved) y Kerberos.','Aprovisionamiento del dominio techcorp-dcj.local y unión de un cliente Windows.','Servicio systemd propio con script Bash, reinicio automático tras kill y consulta en journalctl.','Prioridades con nice/renice, afinidad de CPU en Windows y señales POSIX; tareas programadas con cron.']},
+  {id:'nexatech', cat:'net', label:'Redes', st:'done',
+   t:'NexaTech Solutions — redes en Packet Tracer',
+   d:'Diseño y diagnóstico de redes para una empresa ficticia: de una LAN simple a tres LAN con plan de subnetting.',
+   tags:['Packet Tracer','Subnetting','Cisco IOS','ARP','ICMP','DHCP'],
+   ctx:'Módulo de Planificación y Administración de Redes.',
+   what:['LAN con dos zonas, dos switches y 18 equipos; traza de PDUs ARP e ICMP.','Plan de direccionamiento IPv4 con subnetting para tres LAN independientes.','Diagnóstico por capas de cableado, consola y estado de puertos.','Casos de DHCP (IPs duplicadas, servidor falso) y DNS (delegación, transferencia de zona, envenenamiento).']},
+  {id:'cpd', cat:'net', label:'Hardware · CPD', st:'done',
+   t:'Documentación operativa de un CPD',
+   d:'Conjunto de 8 procedimientos técnicos repartidos por roles: infraestructura, sistemas, redes y helpdesk.',
+   tags:['VLANs','DRP','Backup 3-2-1','Rack 42U','CMDB','Helpdesk'],
+   ctx:'Módulo de Fundamentos de Hardware.',
+   what:['Diseño de rack 42U con pasillo frío y plan de mantenimiento preventivo.','Segmentación en VLANs (gestión, producción, SAN, DMZ) y protocolo ante caída WAN.','Plan de contingencia (DRP) y calendario de copias con la regla 3-2-1.','Ficha de inventario CMDB e informe de incidencia de hardware con ticket.']},
+  {id:'inv', cat:'dev', label:'Web · BBDD', st:'done',
+   t:'Aplicación de inventario con roles',
+   d:'Aplicación web en PHP con base de datos, login seguro y tres roles con permisos distintos.',
+   tags:['PHP 8','MySQL / SQLite','Sesiones','password_hash','HTML/CSS/JS'],
+   ctx:'Módulo de Implantación de Aplicaciones Web.',
+   what:['Registro y autenticación con contraseñas hasheadas (nunca en texto plano).','Sesiones y cookies con caducidad por inactividad.','Roles: gestor de copistería, gestor de tecnología y responsable de inventario.','Servidor Apache2 con PHP en Linux.']},
+  {id:'sql', cat:'dev', label:'BBDD', st:'done',
+   t:'Bases de datos con PostgreSQL y MySQL',
+   d:'Modelado entidad-relación y administración: de las consultas a las vistas, transacciones y bloqueos.',
+   tags:['PostgreSQL','MySQL','psql','E/R','ACID'],
+   ctx:'Módulos de Gestión y Administración de Bases de Datos.',
+   what:['Modelos E/R y scripts DDL de gestión de ventas, empleados y tienda.','Consultas SQL multitabla y agregadas.','Vistas con CHECK OPTION (LOCAL/CASCADE) y su relación con las RULES de PostgreSQL.','Transacciones, COMMIT/ROLLBACK, bloqueos y niveles de aislamiento con accesos simultáneos.']}
+];
+
+const LABS = [
+  {code:'0374', t:'Administración de Sistemas Operativos', items:[['Active Directory','OUs, automatización por consola y delegación de permisos'],['GPO','directivas, contraseñas granulares y recursos centralizados'],['Mantenimiento AD','FSMO, segundo DC, copias y auditoría'],['Samba 4 AD DC','controlador de dominio sobre Ubuntu'],['Procesos','prioridades, afinidad de CPU y señales POSIX'],['systemd','servicios personalizados, recuperación y journalctl'],['cron','tareas periódicas y automatización']]},
+  {code:'0369', t:'Implantación de Sistemas Operativos', items:[['Virtualización','instalación y operaciones con máquinas virtuales'],['Gestores de arranque','configuración y recuperación'],['Usuarios y grupos','administración local en Windows y Linux'],['Ficheros','permisos, ACL, find y tar'],['Almacenamiento','particiones, RAID, LVM y copias de seguridad'],['Dominios','AD y Samba, unión de clientes Ubuntu'],['Monitorización','eventos, rendimiento y auditoría con Auditbeat'],['Acceso remoto','gestión de incidencias y soporte remoto']]},
+  {code:'0370', t:'Planificación y Administración de Redes', items:[['Packet Tracer','primera LAN, ARP e ICMP'],['Medios','conexiones Ethernet, consola y diagnóstico por capas'],['Subnetting','IPv4 y diseño de direccionamiento'],['DHCP y DNS','casos de diagnóstico y seguridad']]},
+  {code:'SAD', t:'Seguridad y Alta Disponibilidad', items:[['Auditoría','arquitectura de protección de una empresa'],['WannaCry','análisis del caso y propagación'],['SOC escolar','catálogo de amenazas y taxonomía de incidentes'],['Gmail','análisis forense de cabeceras SPF/DKIM y 2FA'],['Malware','análisis de software en laboratorio aislado']]},
+  {code:'PyCS', t:'Python y Ciberseguridad', items:[['Python','variables, operadores, bucles, calculadora y juegos'],['Cifrado César','implementación en Python'],['Wireshark','análisis de tráfico en dos partes'],['Kill Chain y MITRE','reconocimiento sobre Metasploitable'],['Explotación','vsftpd 2.3.4 y bindshell 1524'],['Hashes','rainbow tables y Hashcat'],['Normativa','RGPD, LOPDGDD, ENS y NIS (caso Cambridge Analytica)']]},
+  {code:'0371', t:'Fundamentos de Hardware', items:[['Componentes','placa base, CPU, RAM y SSD'],['Particionado','y clonado de imágenes con Clonezilla'],['CPD','roles, documentación y hardware empresarial'],['Diagnóstico','resolución de averías y simulador de defectos'],['Mantenimiento','monitorización, gestión de datos y residuos RAEE']]},
+  {code:'BBDD', t:'Bases de Datos', items:[['MySQL','creación de bases de datos y consultas'],['PostgreSQL','instalación, psql y pgAdmin'],['Vistas','creación, modificación y eliminación'],['Transacciones','bloqueos y concurrencia']]},
+  {code:'WEB', t:'Lenguajes de Marcas y Aplicaciones Web', items:[['Apache2 + PHP','index, Index Of y logs de errores'],['PHP','operaciones, comparaciones, arrays y SQLite'],['XML','estructura y XPath'],['WordPress','instalación y gestión de un CMS'],['Webs','páginas con HTML, CSS y JavaScript']]}
+];
+
+/* ---------- RENDER ---------- */
+const $ = s => document.querySelector(s);
+const bars = n => '<span class="bars">' + [1,2,3].map(i => `<i class="${i<=n ? 'f':''}"></i>`).join('') + '</span>';
+$('#skills').innerHTML = SKILLS.map(s => `
+  <div class="sk reveal" style="--acc:${s.acc}">
+    <div class="sk-h"><div class="sk-ic">${ICON[s.ic]}</div><div><h3>${s.t}</h3><small>${s.s}</small></div></div>
+    <div class="lv">${s.lv.map(([n,l]) => `<div class="lv-row"><span>${n}</span>${bars(l)}</div>`).join('')}</div>
+    <div class="chips">${s.ch.map(c => `<span class="chip">${c}</span>`).join('')}</div>
+  </div>`).join('');
+
+$('#projects').innerHTML = PROJECTS.map(p => `
+  <article class="pj reveal ${p.feat?'feat':''}" data-cat="${p.cat}" data-id="${p.id}" tabindex="0" role="button" aria-label="Ver detalles: ${p.t}">
+    <div class="pj-top"><span class="pj-cat">${p.label}</span><span class="badge ${p.st}">${p.st==='done'?'✓ completado':'◔ en desarrollo'}</span></div>
+    <h3>${p.t}</h3><p>${p.d}</p>
+    <div class="chips">${p.tags.map(c => `<span class="chip">${c}</span>`).join('')}</div>
+    <div class="pj-more">ver detalles →</div>
+  </article>`).join('');
+
+$('#labs').innerHTML = LABS.map((l,i) => `
+  <details class="lab reveal" ${i===0?'open':''}>
+    <summary><span class="code">${l.code}</span><h3>${l.t}</h3><span class="n">${l.items.length} prácticas</span><span class="arr">›</span></summary>
+    <div class="lab-list">${l.items.map(([a,b]) => `<div><b>${a}</b> — ${b}</div>`).join('')}</div>
+  </details>`).join('');
+
+/* filters */
+$('#filters').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#filters button').forEach(x => x.classList.toggle('on', x===b));
+  const f = b.dataset.f;
+  document.querySelectorAll('.pj').forEach(p => p.classList.toggle('hide', f!=='all' && p.dataset.cat!==f));
+});
+
+/* modal */
+const modal = $('#modal');
+function openProject(id){
+  const p = PROJECTS.find(x => x.id===id); if(!p) return;
+  $('#md-path').textContent = `~/proyectos/${p.id}/README.md`;
+  $('#md-body').innerHTML = `
+    <div class="pj-top"><span class="pj-cat">${p.label}</span><span class="badge ${p.st}">${p.st==='done'?'✓ completado':'◔ en desarrollo'}</span></div>
+    <h3>${p.t}</h3><p class="sub">${p.d}</p>
+    <h4>// contexto</h4><p class="sub" style="margin:0">${p.ctx}</p>
+    <h4>// qué hice</h4><ul>${p.what.map(w => `<li>${w}</li>`).join('')}</ul>
+    <h4>// tecnologías</h4><div class="chips">${p.tags.map(c => `<span class="chip">${c}</span>`).join('')}</div>`;
+  modal.showModal();
+}
+$('#projects').addEventListener('click', e => { const c = e.target.closest('.pj'); if(c) openProject(c.dataset.id); });
+$('#projects').addEventListener('keydown', e => { if(e.key==='Enter'){ const c = e.target.closest('.pj'); if(c) openProject(c.dataset.id); }});
+$('#md-close').onclick = () => modal.close();
+modal.addEventListener('click', e => { if(e.target===modal) modal.close(); });
+
+/* ---------- BOOT ---------- */
+(function(){
+  const boot = $('#boot'), log = $('#bootlog');
+  let seen = false; try { seen = sessionStorage.getItem('booted'); } catch(e){}
+  if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches) { boot.classList.add('done'); return; }
+  const lines = ['[ <b>OK</b> ] Iniciando portfolio.service','[ <b>OK</b> ] Montando /home/daniel/proyectos','[ <b>OK</b> ] Conectando con dc1.techcorp.local','[ <b>OK</b> ] Cargando módulos: sistemas, redes, ciberseguridad','[ <b>OK</b> ] Firewall activo · 0 amenazas','','daniel@asix login: <b>bienvenido</b>'];
+  let i = 0;
+  const step = () => { if (i < lines.length) { log.innerHTML += lines[i++] + '\n'; setTimeout(step, 120); } else setTimeout(() => boot.classList.add('done'), 350); };
+  step();
+  boot.addEventListener('click', () => boot.classList.add('done'));
+  try { sessionStorage.setItem('booted', '1'); } catch(e){}
+})();
+
+/* ---------- TYPED ROLE ---------- */
+(function(){
+  const roles = ['Administrador de Sistemas','Técnico de Redes','Analista SOC junior','Soporte IT / Helpdesk'];
+  const el = $('#typed'); let r = 0, c = 0, del = false;
+  (function tick(){
+    const w = roles[r];
+    el.textContent = w.slice(0, c);
+    if (!del && c < w.length) c++;
+    else if (!del) { del = true; return setTimeout(tick, 1600); }
+    else if (c > 0) c--;
+    else { del = false; r = (r+1) % roles.length; }
+    setTimeout(tick, del ? 35 : 70);
+  })();
+})();
+
+/* ---------- REVEAL + COUNTERS ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('in'); io.unobserve(e.target);
+  e.target.querySelectorAll('[data-count]').forEach(n => {
+    const to = +n.dataset.count; let v = 0; const inc = Math.max(1, Math.ceil(to/30));
+    const t = setInterval(() => { v = Math.min(to, v + inc); n.textContent = v + (to >= 50 && v === to ? '+' : ''); if (v === to) clearInterval(t); }, 35);
+  });
+}), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- NAV ---------- */
+const hdr = $('#top');
+addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 20), {passive:true});
+$('#burger').onclick = () => $('#links').classList.toggle('open');
+document.querySelectorAll('#links a').forEach(a => a.addEventListener('click', () => $('#links').classList.remove('open')));
+const secs = [...document.querySelectorAll('main section[id]')];
+const navIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) document.querySelectorAll('#links a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), {rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(s => navIO.observe(s));
+
+/* ---------- NETWORK CANVAS ---------- */
+(function(){
+  const cv = $('#net'), ctx = cv.getContext('2d'); let W, H, nodes = [], packets = [];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){ W = cv.width = innerWidth * devicePixelRatio; H = cv.height = innerHeight * devicePixelRatio; cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+    const n = Math.min(70, Math.floor(innerWidth * innerHeight / 22000));
+    nodes = Array.from({length:n}, () => ({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*.25*devicePixelRatio, vy:(Math.random()-.5)*.25*devicePixelRatio})); }
+  size(); addEventListener('resize', size);
+  const D = 160 * devicePixelRatio;
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for (const p of nodes){ p.x += p.vx; p.y += p.vy; if (p.x<0||p.x>W) p.vx*=-1; if (p.y<0||p.y>H) p.vy*=-1; }
+    for (let i=0;i<nodes.length;i++) for (let j=i+1;j<nodes.length;j++){
+      const a=nodes[i], b=nodes[j], d=Math.hypot(a.x-b.x,a.y-b.y);
+      if (d<D){ ctx.strokeStyle=`rgba(62,199,255,${(1-d/D)*.18})`; ctx.lineWidth=devicePixelRatio; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        if (!reduce && Math.random()<.0008 && packets.length<14) packets.push({a,b,t:0}); }
+    }
+    for (const p of nodes){ ctx.fillStyle='rgba(129,147,171,.55)'; ctx.beginPath(); ctx.arc(p.x,p.y,1.6*devicePixelRatio,0,7); ctx.fill(); }
+    packets = packets.filter(k => (k.t += .012) < 1);
+    for (const k of packets){ const x=k.a.x+(k.b.x-k.a.x)*k.t, y=k.a.y+(k.b.y-k.a.y)*k.t; ctx.fillStyle='#00e5a0'; ctx.shadowColor='#00e5a0'; ctx.shadowBlur=10; ctx.beginPath(); ctx.arc(x,y,2.2*devicePixelRatio,0,7); ctx.fill(); ctx.shadowBlur=0; }
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ---------- TERMINAL ---------- */
+(function(){
+  const out = $('#term-out'), inp = $('#term-input'), box = $('#term');
+  const hist = []; let hi = 0;
+  const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const print = (html, cls='') => { const d = document.createElement('div'); d.className = 'term-line ' + cls; d.innerHTML = html; out.appendChild(d); box.scrollTop = box.scrollHeight; };
+  const CMDS = {
+    help: () => `<span class="c">Comandos disponibles:</span>
+  <span class="g">whoami</span>       quién soy
+  <span class="g">skills</span>       habilidades técnicas
+  <span class="g">projects</span>     lista de proyectos
+  <span class="g">open &lt;id&gt;</span>    abrir un proyecto (p. ej. open soc)
+  <span class="g">education</span>    formación
+  <span class="g">experience</span>   experiencia
+  <span class="g">contact</span>      datos de contacto
+  <span class="g">cv</span>           descargar el CV
+  <span class="g">neofetch</span>     info del sistema
+  <span class="g">clear</span>        limpiar pantalla`,
+    whoami: () => `Daniel Cortés Juncos — Técnico de Sistemas, Redes y Ciberseguridad.
+Estudiante de CFGS ASIX en DigitechFP (Barcelona). Buscando prácticas.`,
+    skills: () => SKILLS.map(s => `<span class="c">${s.t.padEnd(30,' ')}</span> ${s.ch.slice(0,5).join(', ')}`).join('\n'),
+    projects: () => PROJECTS.map(p => `<span class="g">${p.id.padEnd(10,' ')}</span> ${p.t} ${p.st==='wip'?'<span class="a">[wip]</span>':''}`).join('\n') + `\n\nUsa <span class="g">open &lt;id&gt;</span> para ver los detalles.`,
+    education: () => `<span class="c">2025–2027</span>  CFGS ASIX · DigitechFP (en curso)\n<span class="c">Completado</span> CFGM SMR · Institut Tecnològic de Barcelona`,
+    experience: () => `<span class="c">06/2024–12/2024</span> Técnico de Soporte TI / Helpdesk Junior · Instituto Pablo Ruiz Picasso (FCT)\n<span class="c">Logística</span>       Mozo de almacén · Amazon Center / JEVASO (Mango)\n<span class="c">Atención</span>        Atención al cliente · JD Sports / Factor Energia`,
+    contact: () => `email     <a class="g" href="mailto:danijunior070606@gmail.com">danijunior070606@gmail.com</a>\nteléfono  +34 665 663 753\nubicación Barcelona, España`,
+    cv: () => { const a = document.createElement('a'); a.href = 'assets/CV_Daniel_Cortes_Juncos.pdf'; a.download = ''; a.click(); return 'Descargando CV_Daniel_Cortes_Juncos.pdf ...'; },
+    neofetch: () => `<span class="g">   .--.     </span> <span class="c">daniel</span>@<span class="c">asix</span>
+<span class="g">  |o_o |    </span> ------------------
+<span class="g">  |:_/ |    </span> <span class="c">OS</span>: Ubuntu Server 24.04 + Windows Server 2022
+<span class="g"> //   \\ \\   </span> <span class="c">Role</span>: Sysadmin / Blue Team junior
+<span class="g">(|     | )  </span> <span class="c">Shell</span>: bash, PowerShell, python3
+<span class="g">/'\\_   _/\`\\ </span> <span class="c">Uptime</span>: 2º curso de ASIX
+<span class="g">\\___)=(___/ </span> <span class="c">Packages</span>: AD, Samba, Docker, Proxmox, Wazuh`,
+    sudo: () => `<span class="r" style="color:var(--red)">daniel no está en el fichero sudoers. Este incidente será reportado. ;)</span>`,
+    ls: () => `sobre_mi/  habilidades/  proyectos/  laboratorios/  CV_Daniel_Cortes_Juncos.pdf`
+  };
+  function run(raw){
+    const cmd = raw.trim(); print(`<span class="ps">daniel@asix:~$</span> ${esc(cmd)}`);
+    if (!cmd) return;
+    const [c, ...args] = cmd.split(/\s+/); const k = c.toLowerCase();
+    if (k === 'clear') { out.innerHTML = ''; return; }
+    if (k === 'open') { const p = PROJECTS.find(x => x.id === (args[0]||'').toLowerCase()); if (p) { openProject(p.id); print(`Abriendo ${p.t} ...`); } else print(`open: proyecto no encontrado. Prueba <span class="g">projects</span>.`); return; }
+    if (k === 'rm' && args.join(' ').includes('-rf')) { print('<span style="color:var(--red)">Permiso denegado. Buen intento.</span>'); return; }
+    if (CMDS[k]) print(CMDS[k]()); else print(`${esc(c)}: comando no encontrado. Escribe <span class="g">help</span>.`);
+  }
+  print(`Bienvenido al shell de Daniel. Escribe <span class="g">help</span> para ver los comandos.\n`);
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { hist.push(inp.value); hi = hist.length; run(inp.value); inp.value = ''; }
+    else if (e.key === 'ArrowUp' && hi > 0) { inp.value = hist[--hi]; e.preventDefault(); }
+    else if (e.key === 'ArrowDown') { inp.value = hi < hist.length-1 ? hist[++hi] : (hi = hist.length, ''); }
+    else if (e.key === 'Tab') { e.preventDefault(); const m = Object.keys(CMDS).concat(['clear','open']).find(x => x.startsWith(inp.value)); if (m) inp.value = m; }
+  });
+  box.addEventListener('click', () => inp.focus({preventScroll:true}));
+  $('#hint').innerHTML = ['help','whoami','skills','projects','open soc','neofetch'].map(c => `<button data-c="${c}">${c}</button>`).join('');
+  $('#hint').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { run(b.dataset.c); } });
+})();
+</script>
+</body>
+</html>
