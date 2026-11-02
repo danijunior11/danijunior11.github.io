@@ -565,7 +565,12 @@ const PROJECTS = [
    tags:['Wazuh','Suricata','Cowrie','Shuffle SOAR','DFIR-IRIS','Docker Compose','Telegram'],
    ctx:'Proyecto en equipo de 3: plataforma (Docker y despliegue), detección (Wazuh y Suricata) y respuesta (mi rol).',
    what:['Despliegue de Shuffle (SOAR) y DFIR-IRIS dentro del stack Docker Compose común.','Integración Wazuh → Shuffle por webhook para alertas de nivel alto.','Playbook 1: alerta → aviso en Telegram con host, regla y técnica MITRE ATT&CK.','Playbook 2: alerta → creación automática de un caso en DFIR-IRIS.','Playbook 3 (respuesta activa): bloqueo de la IP atacante.','Ataques simulados desde Kali (nmap, fuerza bruta SSH, honeypot Cowrie) para validar el circuito.']},
-  {id:'hos', cat:'sys', label:'Sistemas · Redes · BBDD', st:'wip',
+  {id:'wordlist', cat:'sec', label:'Ciberseguridad · Herramienta', st:'done', repo:'https://github.com/danijunior11/wordlist_generator',
+   t:'Generador de diccionarios (wordlists)',
+   d:'Proyecto personal: herramienta de escritorio en Python con interfaz gráfica que genera diccionarios de contraseñas a partir de una palabra base y datos OSINT, para pruebas de seguridad autorizadas.',
+   tags:['Python','Tkinter','Multithreading','OSINT','Hashcat','John the Ripper'],
+   ctx:'Proyecto propio de código abierto en GitHub, para prácticas de ciberseguridad y pentesting ético. Incluye un aviso legal: solo debe usarse sobre sistemas propios o con permiso explícito.',
+   what:['Interfaz gráfica (GUI) con Tkinter y diseño tipo terminal, con animación de arranque.','Generación en segundo plano con multithreading y contador de progreso y velocidad en tiempo real.','Campos OSINT (nombre, apellido, apodo, mascota, fecha) que se combinan con la palabra base.','Mutaciones: mayúsculas/minúsculas, leetspeak, palabra invertida y afijos de símbolos y números.','Deduplicación automática de las entradas generadas.','Exportación a .txt y generación de reglas para Hashcat, listas para usar con Hashcat o John the Ripper.']},  {id:'hos', cat:'sys', label:'Sistemas · Redes · BBDD', st:'wip',
    t:'Infraestructura virtualizada para un centro logístico',
    d:'Laboratorio multiservidor que simula los procesos de un almacén (recepción, ubicación, picking y expedición) con una aplicación WMS propia.',
    tags:['OPNsense','Windows Server','Active Directory','Ubuntu Server','PostgreSQL','Python/Flask'],
@@ -719,7 +724,7 @@ function openProject(id){
     <h3>${p.t}</h3><p class="sub">${p.d}</p>
     <h4>// contexto</h4><p class="sub" style="margin:0">${p.ctx}</p>
     <h4>// qué hice</h4><ul>${p.what.map(w => `<li>${w}</li>`).join('')}</ul>
-    <h4>// tecnologías</h4><div class="chips">${p.tags.map(c => `<span class="chip">${c}</span>`).join('')}</div>`;
+    <h4>// tecnologías</h4><div class="chips">${p.tags.map(c => `<span class="chip">${c}</span>`).join('')}</div>` + (p.repo ? `<h4>// código</h4><a class="btn" style="margin-top:4px" href="${p.repo}" target="_blank" rel="noopener">⎇ Ver repositorio en GitHub →</a>` : '');
   modal.showModal();
 }
 $('#projects').addEventListener('click', e => { const c = e.target.closest('.pj'); if(c) openProject(c.dataset.id); });
